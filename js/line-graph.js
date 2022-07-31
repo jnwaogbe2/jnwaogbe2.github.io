@@ -31,7 +31,7 @@ var svg = d3.select("#line-graph").append("svg")
 .append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("../data/data.json", function (error, data) {
+d3.json("https://jnwaogbe2.github.io/data/data.json", function (error, data) {
     // 3. Call the x axis in a group tag
     svg.append("g")
         .attr("class", "x axis")
