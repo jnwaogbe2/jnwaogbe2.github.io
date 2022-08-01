@@ -2,8 +2,18 @@
   box-sizing: border-box
 }
 
-.container {
+h1, h2 {
+  text-align: center;
+}
+
+svg {
+  width: 100%;
+}
+
+#container {
   min-height: 100vh;
+  position: absolute;
+  width: 100%;
 }
 
 /* Slideshow container */
@@ -117,6 +127,7 @@
 }
 
 .w3-center {
+  display: block;
   text-align: center !important
 }
 
@@ -147,6 +158,7 @@
 
 .w3-section,
 .w3-code {
+  display: inline-flex;
   margin-top: 16px !important;
   margin-bottom: 16px !important
 }
