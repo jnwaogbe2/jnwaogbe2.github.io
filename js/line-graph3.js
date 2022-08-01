@@ -2,7 +2,7 @@ var margin = { top: 50, right: 50, bottom: 50, left: 50 },
     width = window.innerWidth - margin.left - margin.right, // Use the window's width
     height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
 
-var svg3 = d3.selectAll("#line-graph1").append("svg")
+var svg3 = d3.selectAll("#line-graph3").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -16,23 +16,15 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         d.Acousticness = d.Acousticness;
     });
 
-    data = data.filter(function(d) {
-        if (currentSlide == 1) {
-          return d.Year >= parseTime("1960") && d.Year <= parseTime("1980")
-        }
-        if (currentSlide == 2) {
-            return d.Year >= parseTime("1980") && d.Year <= parseTime("2000")
-        }
-        if (currentSlide == 3) {
-            return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
-        }
-      })
+    data = data.filter(function (d) {
+        return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
+    })
 
     // 5. X scale will use the index of our data
     var xScale = d3.scaleTime().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0])
-    xScale.domain(d3.extent(data, function(d) { return d.Year; }));
-    yScale.domain([0, d3.max(data, function(d) { return d.Acousticness; })]);
+    xScale.domain(d3.extent(data, function (d) { return d.Year; }));
+    yScale.domain([0, 0.80]);
 
 
     var line = d3.line()
@@ -63,13 +55,13 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dot") // Assign a class for styling
         .attr("cx", function (d, i) { return xScale(d.Year); })
-        .attr("cy", function (d) { return yScale(d.Acousticness);})
+        .attr("cy", function (d) { return yScale(d.Acousticness); })
         .attr("r", 5)
-        // .on("mouseover", function (a, b, c) {
-        //     console.log(a)
-        //     d3.select(this).attr('class', 'focus')
-        // })
-        // .on("mouseout", function () { 
-        //     d3.select(this).attr('class', '')
-        // });
+    // .on("mouseover", function (a, b, c) {
+    //     console.log(a)
+    //     d3.select(this).attr('class', 'focus')
+    // })
+    // .on("mouseout", function () { 
+    //     d3.select(this).attr('class', '')
+    // });
 });

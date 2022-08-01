@@ -16,23 +16,15 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         d.Acousticness = d.Acousticness;
     });
 
-    data = data.filter(function(d) {
-        if (currentSlide == 1) {
-          return d.Year >= parseTime("1960") && d.Year <= parseTime("1980")
-        }
-        if (currentSlide == 2) {
-            return d.Year >= parseTime("1980") && d.Year <= parseTime("2000")
-        }
-        if (currentSlide == 3) {
-            return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
-        }
-      })
+    data = data.filter(function (d) {
+        return d.Year >= parseTime("1960") && d.Year <= parseTime("1980")
+    })
 
     // 5. X scale will use the index of our data
     var xScale = d3.scaleTime().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0])
     xScale.domain(d3.extent(data, function(d) { return d.Year; }));
-    yScale.domain([0, d3.max(data, function(d) { return d.Acousticness; })]);
+    yScale.domain([0, 0.80]);
 
 
     var line = d3.line()
