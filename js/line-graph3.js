@@ -64,4 +64,43 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     // .on("mouseout", function () { 
     //     d3.select(this).attr('class', '')
     // });
+
+    const annotations = [
+        {
+            note: {
+                label: "GarageBand is a software released by Apple that allowed for amateur producers to make music without a studio.",
+                title: "Release of GarageBand",
+                wrap: 10
+            },
+            //can use x, y directly instead of data
+            className: "show-bg",
+            dy: -200,
+            dx: 100,
+            x: xScale(parseTime("2004")),
+            y: yScale(0.1600),
+            subject: {
+                x1: xScale(parseTime("2004")),
+                y1: 0,
+                x2: xScale(parseTime("2004")),
+                y2: height
+            }
+        }
+    ]
+
+    const makeAnnotations3 = d3.annotation()
+        .type(d3.annotationXYThreshold)
+        .on('noteclick', function (annotation) {
+            // svg2.selectAll(".annotation-note-label")
+            //     .classed("visible", true)
+
+            // svg.selectAll(".annotation-note-label.visible")
+            //     .classed("visible", false)
+        })
+        .annotations(annotations);
+
+
+
+    svg3.append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations3);
 });

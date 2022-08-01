@@ -29,6 +29,10 @@ svg {
   margin: auto;
 }
 
+.annotations:hover {
+  fill: #000000
+}
+
 .annotation path {
   stroke: var(--accent-color);
   fill: none;
@@ -47,12 +51,21 @@ svg {
   cursor: pointer;
 }
 
-.annotation-note-label {
-  display: none;
+.annotation-subject {
+  cursor: pointer;
+  stroke-width: 2;
 }
 
+path.annotation-subject:hover {
+  fill: #717171 !important;
+}
+
+/* .annotation-note-label {
+  display: none;
+} */
+
 .annotation-note-label.visible {
-  display: block;
+  display: block !important;
 }
 
 .annotation text:hover {

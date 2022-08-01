@@ -23,7 +23,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     // 5. X scale will use the index of our data
     var xScale = d3.scaleTime().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0])
-    xScale.domain(d3.extent(data, function(d) { return d.Year; }));
+    xScale.domain(d3.extent(data, function (d) { return d.Year; }));
     yScale.domain([0, 0.80]);
 
 
@@ -55,13 +55,63 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dot") // Assign a class for styling
         .attr("cx", function (d, i) { return xScale(d.Year); })
-        .attr("cy", function (d) { return yScale(d.Acousticness);})
+        .attr("cy", function (d) { return yScale(d.Acousticness); })
         .attr("r", 5)
-        // .on("mouseover", function (a, b, c) {
-        //     console.log(a)
-        //     d3.select(this).attr('class', 'focus')
-        // })
-        // .on("mouseout", function () { 
-        //     d3.select(this).attr('class', '')
-        // });
+    // .on("mouseover", function (a, b, c) {
+    //     console.log(a)
+    //     d3.select(this).attr('class', 'focus')
+    // })
+    // .on("mouseout", function () { 
+    //     d3.select(this).attr('class', '')
+    // });
+
+    // svg2.append("line")
+    //     .attr("x1", xScale(parseTime("1997")))  //<<== change your code here
+    //     .attr("y1", 0)
+    //     .attr("x2", xScale(parseTime("1997")))  //<<== and here
+    //     .attr("y2", height)
+    //     .attr("class", "baseline axis")
+    //     .style("stroke", "#E8336D")
+    //     .style("stroke-width", 3);
+
+    const annotations2 = [
+        {
+            note: {
+                label: "AutoTune was invented in 1997. The first song published using Auto-Tune on the vocals was the 1998 song \"Believe\" by Cher.",
+                title: "Creation of AutoTune",
+                wrap: 10
+            },
+            //can use x, y directly instead of data
+            className: "show-bg",
+            dy: -300,
+            dx: -200,
+            x: xScale(parseTime("1997")),
+            y: yScale(0.1696),
+            subject: {
+                x1: xScale(parseTime("1997")),
+                y1: 0,
+                x2: xScale(parseTime("1997")),
+                y2: height,
+                text: 'C',
+                y: 'bottom'
+              }
+        }
+    ]
+
+    const makeAnnotations2 = d3.annotation()
+        .type(d3.annotationXYThreshold)
+        .on('noteclick', function (annotation) {
+            // svg2.selectAll(".annotation-note-label")
+            //     .classed("visible", true)
+
+            // svg.selectAll(".annotation-note-label.visible")
+            //     .classed("visible", false)
+        })
+        .annotations(annotations2);
+
+
+
+    svg2.append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations2);
 });

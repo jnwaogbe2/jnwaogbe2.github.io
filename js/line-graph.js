@@ -65,14 +65,14 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     //     d3.select(this).attr('class', '')
     // });
 
-    svg.append("line")
-        .attr("x1", xScale(parseTime("1964")))  //<<== change your code here
-        .attr("y1", 0)
-        .attr("x2", xScale(parseTime("1964")))  //<<== and here
-        .attr("y2", height)
-        .attr("class", "baseline axis")
-        .style("stroke", "#E8336D")
-        .style("stroke-width", 3);
+    // svg.append("line")
+    //     .attr("x1", xScale(parseTime("1964")))  //<<== change your code here
+    //     .attr("y1", 0)
+    //     .attr("x2", xScale(parseTime("1964")))  //<<== and here
+    //     .attr("y2", height)
+    //     .attr("class", "baseline axis")
+    //     .style("stroke", "#E8336D")
+    //     .style("stroke-width", 3);
 
     const annotations = [
         {
@@ -84,19 +84,29 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
             },
             //can use x, y directly instead of data
             className: "show-bg",
-            dy: 150,
+            dy: 200,
             dx: 100,
             x: xScale(parseTime("1964")),
             y: yScale(0.5506),
+            subject: {
+                x1: xScale(parseTime("1964")),
+                y1: 0,
+                x2: xScale(parseTime("1964")),
+                y2: height
+              }
         }
     ]
 
     const makeAnnotations = d3.annotation()
-        .type(d3.annotationCallout)
+        .type(d3.annotationXYThreshold)
         .on('noteclick', function (annotation) {
-            annotation.type.a.selectAll("g.annotation-note-label")
+            svg.selectAll(".annotation-note-label")
                 .classed("visible", true)
+
+            // svg.selectAll(".annotation-note-label.visible")
+            //     .classed("visible", false)
         })
+
         .annotations(annotations);
 
 
