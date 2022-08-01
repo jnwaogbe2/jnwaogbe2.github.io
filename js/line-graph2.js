@@ -85,8 +85,8 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
             },
             //can use x, y directly instead of data
             className: "show-bg",
-            dy: -400,
-            dx: -400,
+            dy: -40,
+            dx: -10,
             x: xScale(parseTime("1997")),
             y: yScale(0.60),
             subject: {
@@ -106,8 +106,8 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
                 .attr("y", 20)
                 .classed("visible", true)
 
-            svg2.selectAll("tspan")
-                .attr("width", 30)
+//             svg2.selectAll("tspan")
+//                 .attr("width", 30)
 
             // svg.selectAll(".annotation-note-label.visible")
             //     .classed("visible", false)
