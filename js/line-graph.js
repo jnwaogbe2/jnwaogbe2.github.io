@@ -23,7 +23,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     // 5. X scale will use the index of our data
     var xScale = d3.scaleTime().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0])
-    xScale.domain(d3.extent(data, function(d) { return d.Year; }));
+    xScale.domain(d3.extent(data, function (d) { return d.Year; }));
     yScale.domain([0, 0.80]);
 
 
@@ -55,13 +55,46 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dot") // Assign a class for styling
         .attr("cx", function (d, i) { return xScale(d.Year); })
-        .attr("cy", function (d) { return yScale(d.Acousticness);})
+        .attr("cy", function (d) { return yScale(d.Acousticness); })
         .attr("r", 5)
-        // .on("mouseover", function (a, b, c) {
-        //     console.log(a)
-        //     d3.select(this).attr('class', 'focus')
-        // })
-        // .on("mouseout", function () { 
-        //     d3.select(this).attr('class', '')
-        // });
+    // .on("mouseover", function (a, b, c) {
+    //     console.log(a)
+    //     d3.select(this).attr('class', 'focus')
+    // })
+    // .on("mouseout", function () { 
+    //     d3.select(this).attr('class', '')
+    // });
+
+    svg.append("line")
+        .attr("x1", xScale("1970"))  //<<== change your code here
+        .attr("y1", 0)
+        .attr("x2", xScale("1970"))  //<<== and here
+        .attr("y2", height)
+        .attr("class", "baseline axis")
+        .style("stroke", "red")
+        .style("stroke-width", 3);
+
+    const annotations = [
+        {
+            note: {
+                label: "Blah blah blah",
+                title: "Debut of the Moog Synthesizer",
+                padding: 10
+            },
+            color: ["#cc0000"],
+            x: xScale("1970"),
+            y: 100,
+            dy: 150,
+            dx: 150,
+            type: d3.annotationCalloutElbow
+        }
+    ]
+
+    const makeAnnotations = d3.annotation()
+        .type(d3.annotationLabel)
+        .annotations(annotations);
+
+    d3.select("svg")
+        .append("g")
+        .call(makeAnnotations);
 });
