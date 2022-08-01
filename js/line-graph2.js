@@ -103,12 +103,12 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
                 .attr("y", 20)
                 .classed("visible", true)
             
-            var path = d3.path();
-            path.lineTo(225,0);
-            path.closePath();
+//             var path = d3.path();
+//             path.lineTo(225,0);
+//             path.closePath();
             
-            svg2.selectAll(".note-line")
-                .attr("d", path);
+//             svg2.selectAll(".note-line")
+//                 .attr("d", path);
             
             // svg.selectAll(".annotation-note-label.visible")
             //     .classed("visible", false)
