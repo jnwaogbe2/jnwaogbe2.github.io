@@ -75,7 +75,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
             dy: -200,
             dx: 100,
             x: xScale(parseTime("2004")),
-            y: yScale(0.1600),
+            y: yScale(0.50),
             subject: {
                 x1: xScale(parseTime("2004")),
                 y1: 0,
