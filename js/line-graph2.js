@@ -98,11 +98,18 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     const makeAnnotations2 = d3.annotation()
         .type(d3.annotationXYThreshold)
         .on('noteclick', function (annotation) {
-
+            
             svg2.selectAll(".annotation-note-label")
                 .attr("y", 20)
                 .classed("visible", true)
-
+            
+            var path = d3.path();
+            path.lineTo(225,0);
+            path.closePath();
+            
+            svg2.selectAll(".note-line")
+                .attr("d", path);
+            
             // svg.selectAll(".annotation-note-label.visible")
             //     .classed("visible", false)
         })
