@@ -16,17 +16,17 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         d.Acousticness = d.Acousticness;
     });
 
-    // data = data.filter(function(d) {
-    //     if (document.getElementById("au_button").checked) {
-    //       return d.Year >= parseTime("1960") && d.Year <= parseTime("1980")
-    //     }
-    //     if (document.getElementById("us_button").checked) {
-    //         return d.Year >= parseTime("1980") && d.Year <= parseTime("2000")
-    //     }
-    //     if (document.getElementById("nz_button").checked) {
-    //         return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
-    //     }
-    //   })
+    data = data.filter(function(d) {
+        if (currentSlide == 1) {
+          return d.Year >= parseTime("1960") && d.Year <= parseTime("1980")
+        }
+        if (currentSlide == 2) {
+            return d.Year >= parseTime("1980") && d.Year <= parseTime("2000")
+        }
+        if (currentSlide == 3) {
+            return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
+        }
+      })
 
     // 5. X scale will use the index of our data
     var xScale = d3.scaleTime().range([0, width]);
@@ -34,16 +34,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     xScale.domain(d3.extent(data, function(d) { return d.Year; }));
     yScale.domain([0, d3.max(data, function(d) { return d.Acousticness; })]);
 
-    // var xScale = d3.scaleLinear()
-    //     .domain([0, n - 1]) // input
-    //     .range([0, width]); // output
 
-    // // 6. Y scale will use the randomly generate number 
-    // var yScale = d3.scaleLinear()
-    //     .domain([0, 1]) // input 
-    //     .range([height, 0]); // output 
-
-    // 7. d3's line generator
     var line = d3.line()
         .x(function (d, i) { return xScale(d.Year); }) // set the x values for the line generator
         .y(function (d) { return yScale(d.Acousticness); }) // set the y values for the line generator 
