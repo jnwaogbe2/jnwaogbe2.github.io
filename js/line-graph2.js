@@ -77,16 +77,13 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     const annotations2 = [
         {
             note: {
-                label: "AutoTune was invented in 1997. The first song published using Auto-Tune\n on the vocals was the 1998 song \"Believe\" by Cher.",
-                bgPadding: { "top": 200, "left": 10, "right": 2000, "bottom": 10 },
+                label: "AutoTune was invented in 1997. It was originally created to correct off-key inaccuracies. Because of the robotic sound it adds to vocals, it became one of the most used effects in pop music. The first song published using Auto-Tune\n on the vocals was the 1998 song \"Believe\" by Cher.",
                 title: "Creation of AutoTune",
                 wrap: 10,
                 wrapSplitter: /\n/
             },
-            //can use x, y directly instead of data
-            className: "show-bg",
             dy: -40,
-            dx: -10,
+            dx: -40,
             x: xScale(parseTime("1997")),
             y: yScale(0.60),
             subject: {
@@ -105,9 +102,6 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
             svg2.selectAll(".annotation-note-label")
                 .attr("y", 20)
                 .classed("visible", true)
-
-//             svg2.selectAll("tspan")
-//                 .attr("width", 30)
 
             // svg.selectAll(".annotation-note-label.visible")
             //     .classed("visible", false)
