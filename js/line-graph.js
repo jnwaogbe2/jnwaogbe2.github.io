@@ -2,36 +2,53 @@ var margin = { top: 50, right: 50, bottom: 50, left: 50 },
     width = window.innerWidth - margin.left - margin.right, // Use the window's width
     height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
 
-// The number of datapoints
-var n = 21;
+var svg = d3.selectAll("#line-graph1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// 5. X scale will use the index of our data
-var xScale = d3.scaleLinear()
-    .domain([0, n - 1]) // input
-    .range([0, width]); // output
+d3.json("/data/average_acoust_by_year.json").then(function (data) {
+    parseTime = d3.timeParse("%Y");
 
-// 6. Y scale will use the randomly generate number 
-var yScale = d3.scaleLinear()
-    .domain([0, 1]) // input 
-    .range([height, 0]); // output 
+    data.forEach(function (d) {
+        d.Year = parseTime(d.Year)
+        d.Acousticness = d.Acousticness;
+    });
 
-// 7. d3's line generator
-var line = d3.line()
-    .x(function (d, i) { return xScale(i.Year); }) // set the x values for the line generator
-    .y(function (d) { return yScale(d.Acousticness); }) // set the y values for the line generator 
-    .curve(d3.curveMonotoneX) // apply smoothing to the line
+    // data = data.filter(function(d) {
+    //     if (document.getElementById("au_button").checked) {
+    //       return d.Year >= parseTime("1960") && d.Year <= parseTime("1980")
+    //     }
+    //     if (document.getElementById("us_button").checked) {
+    //         return d.Year >= parseTime("1980") && d.Year <= parseTime("2000")
+    //     }
+    //     if (document.getElementById("nz_button").checked) {
+    //         return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
+    //     }
+    //   })
 
-// 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-//var dataset = d3.range(n).map(function (d) { return { "y": d3.randomUniform(1)() } })
+    // 5. X scale will use the index of our data
+    var xScale = d3.scaleTime().range([0, width]);
+    var yScale = d3.scaleLinear().range([height, 0])
+    xScale.domain(d3.extent(data, function(d) { return d.Year; }));
+    yScale.domain([0, d3.max(data, function(d) { return d.Acousticness; })]);
 
-// 1. Add the SVG to the page and employ #2
-var svg = d3.select("#line-graph").append("svg")
-.attr("width", width + margin.left + margin.right)
-.attr("height", height + margin.top + margin.bottom)
-.append("g")
-.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // var xScale = d3.scaleLinear()
+    //     .domain([0, n - 1]) // input
+    //     .range([0, width]); // output
 
-d3.json("https://jnwaogbe2.github.io/data/data.json", function (error, data) {
+    // // 6. Y scale will use the randomly generate number 
+    // var yScale = d3.scaleLinear()
+    //     .domain([0, 1]) // input 
+    //     .range([height, 0]); // output 
+
+    // 7. d3's line generator
+    var line = d3.line()
+        .x(function (d, i) { return xScale(d.Year); }) // set the x values for the line generator
+        .y(function (d) { return yScale(d.Acousticness); }) // set the y values for the line generator 
+        .curve(d3.curveMonotoneX) // apply smoothing to the line
+
     // 3. Call the x axis in a group tag
     svg.append("g")
         .attr("class", "x axis")
@@ -54,12 +71,14 @@ d3.json("https://jnwaogbe2.github.io/data/data.json", function (error, data) {
         .data(data)
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dot") // Assign a class for styling
-        .attr("cx", function (d) { return xScale(d.Year) })
-        .attr("cy", function (d) { return yScale(d.Acousticness) })
+        .attr("cx", function (d, i) { return xScale(d.Year); })
+        .attr("cy", function (d) { return yScale(d.Acousticness);})
         .attr("r", 5)
-        .on("mouseover", function (a, b, c) {
-            console.log(a)
-            this.attr('class', 'focus')
-        })
-        .on("mouseout", function () { });
+        // .on("mouseover", function (a, b, c) {
+        //     console.log(a)
+        //     d3.select(this).attr('class', 'focus')
+        // })
+        // .on("mouseout", function () { 
+        //     d3.select(this).attr('class', '')
+        // });
 });
