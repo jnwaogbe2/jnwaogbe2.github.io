@@ -60,9 +60,9 @@ path.annotation-subject:hover {
   fill: #717171 !important;
 }
 
-/* .annotation-note-label {
+.annotation-note-label {
   display: none;
-} */
+}
 
 .annotation-note-label.visible {
   display: block !important;

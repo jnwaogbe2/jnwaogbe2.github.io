@@ -83,7 +83,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
             },
             //can use x, y directly instead of data
             className: "show-bg",
-            dy: -300,
+            dy: -400,
             dx: -200,
             x: xScale(parseTime("1997")),
             y: yScale(0.1696),
@@ -101,8 +101,8 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     const makeAnnotations2 = d3.annotation()
         .type(d3.annotationXYThreshold)
         .on('noteclick', function (annotation) {
-            // svg2.selectAll(".annotation-note-label")
-            //     .classed("visible", true)
+            svg2.selectAll(".annotation-note-label")
+                .classed("visible", true)
 
             // svg.selectAll(".annotation-note-label.visible")
             //     .classed("visible", false)

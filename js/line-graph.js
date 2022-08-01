@@ -77,7 +77,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     const annotations = [
         {
             note: {
-                label: "Longer text to show text wrapping",
+                label: "Moog synthesizers are electronic musical instruments that have the capability of \n producing the sounds of a wide variety of traditional musical. It was introduced in 1964.",
                 bgPadding: { "top": 15, "left": 10, "right": 10, "bottom": 10 },
                 title: "Debut of the Moog Synthesizer",
                 wrap: 300
