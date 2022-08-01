@@ -88,7 +88,8 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     const makeAnnotations3 = d3.annotation()
         .type(d3.annotationXYThreshold)
         .on('noteclick', function (annotation) {
-            svg2.selectAll(".annotation-note-label")
+            svg3.selectAll(".annotation-note-label")
+                .attr("y", 20)
                 .classed("visible", true)
 
             // svg.selectAll(".annotation-note-label.visible")

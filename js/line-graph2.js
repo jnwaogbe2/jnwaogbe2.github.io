@@ -77,14 +77,16 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     const annotations2 = [
         {
             note: {
-                label: "AutoTune was invented in 1997. The first song published using Auto-Tune on the vocals was the 1998 song \"Believe\" by Cher.",
+                label: "AutoTune was invented in 1997. The first song published using Auto-Tune\n on the vocals was the 1998 song \"Believe\" by Cher.",
+                bgPadding: { "top": 200, "left": 10, "right": 2000, "bottom": 10 },
                 title: "Creation of AutoTune",
-                wrap: 10
+                wrap: 10,
+                wrapSplitter: /\n/
             },
             //can use x, y directly instead of data
             className: "show-bg",
             dy: -400,
-            dx: -200,
+            dx: -400,
             x: xScale(parseTime("1997")),
             y: yScale(0.1696),
             subject: {
@@ -92,17 +94,20 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
                 y1: 0,
                 x2: xScale(parseTime("1997")),
                 y2: height,
-                text: 'C',
-                y: 'bottom'
-              }
+            }
         }
     ]
 
     const makeAnnotations2 = d3.annotation()
         .type(d3.annotationXYThreshold)
         .on('noteclick', function (annotation) {
+
             svg2.selectAll(".annotation-note-label")
+                .attr("y", 20)
                 .classed("visible", true)
+
+            svg2.selectAll("tspan")
+                .attr("width", 30)
 
             // svg.selectAll(".annotation-note-label.visible")
             //     .classed("visible", false)
