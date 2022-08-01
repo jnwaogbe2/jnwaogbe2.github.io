@@ -2,12 +2,18 @@
   box-sizing: border-box
 }
 
+:root {
+  --accent-color: #E8336D;
+  font-family: 'Lato';
+}
+
 h1, h2 {
   text-align: center;
 }
 
 svg {
   width: 100%;
+  font-family: 'Lato';
 }
 
 #container {
@@ -23,27 +29,45 @@ svg {
   margin: auto;
 }
 
-/* Hide the images by default */
-.mySlides {
+.annotation path {
+  stroke: var(--accent-color);
+  fill: none;
+}
+
+.annotation path.connector-arrow{
+  fill: var(--accent-color);
+}
+
+.annotation text {
+  fill: var(--accent-color);
+}
+
+.annotation-note-title {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.annotation-note-label {
   display: none;
 }
 
-/* Next & previous buttons */
-.prev,
-.next {
+.annotation-note-label.visible {
+  display: block;
+}
+
+.annotation text:hover {
+  fill: #717171;
   cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-  background-color: red;
+}
+
+line.baseline.axis:hover {
+  stroke: #717171 !important;
+  cursor: pointer;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
 }
 
 /* Position the "next button" to the right */
@@ -114,7 +138,7 @@ svg {
 .w3-red,
 .w3-hover-red:hover {
   color: #fff !important;
-  background-color: #f44336 !important
+  background-color: var(--accent-color) !important
 }
 
 .w3-center .w3-bar {

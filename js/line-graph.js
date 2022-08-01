@@ -66,35 +66,42 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
     // });
 
     svg.append("line")
-        .attr("x1", xScale("1970"))  //<<== change your code here
+        .attr("x1", xScale(parseTime("1964")))  //<<== change your code here
         .attr("y1", 0)
-        .attr("x2", xScale("1970"))  //<<== and here
+        .attr("x2", xScale(parseTime("1964")))  //<<== and here
         .attr("y2", height)
         .attr("class", "baseline axis")
-        .style("stroke", "red")
+        .style("stroke", "#E8336D")
         .style("stroke-width", 3);
 
     const annotations = [
         {
             note: {
-                label: "Blah blah blah",
+                label: "Longer text to show text wrapping",
+                bgPadding: { "top": 15, "left": 10, "right": 10, "bottom": 10 },
                 title: "Debut of the Moog Synthesizer",
-                padding: 10
+                wrap: 300
             },
-            color: ["#cc0000"],
-            x: xScale("1970"),
-            y: 100,
+            //can use x, y directly instead of data
+            className: "show-bg",
             dy: 150,
-            dx: 150,
-            type: d3.annotationCalloutElbow
+            dx: 100,
+            x: xScale(parseTime("1964")),
+            y: yScale(0.5506),
         }
     ]
 
     const makeAnnotations = d3.annotation()
-        .type(d3.annotationLabel)
+        .type(d3.annotationCallout)
+        .on('noteclick', function (annotation) {
+            annotation.type.a.selectAll("g.annotation-note-label")
+                .classed("visible", true)
+        })
         .annotations(annotations);
 
-    d3.select("svg")
-        .append("g")
+
+
+    svg.append("g")
+        .attr("class", "annotation-group")
         .call(makeAnnotations);
 });
