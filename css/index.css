@@ -2,7 +2,7 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 100%;
+  max-width: 300px;
   position: relative;
   margin: auto;
 }
