@@ -83,7 +83,7 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
                 wrapSplitter: /\n/
             },
             dy: 40,
-            dx: -300,
+            dx: -350,
             x: xScale(parseTime("1997")),
             y: yScale(0.60),
             subject: {
@@ -99,9 +99,31 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         .type(d3.annotationXYThreshold)
         .on('noteclick', function (annotation) {
             
-            svg2.selectAll(".annotation-note-label")
-                .attr("y", 20)
-                .classed("visible", true)
+            // svg2.selectAll(".annotation-note-content")
+            //     .append('div')
+            //     .attr('class', 'annotation-note-label')
+            //     .text(annotation.note.label)
+            //     .attr('text-anchor', 'middle')
+            //     .attr('y', '20')
+            //     .attr('x', '15')
+            //     .style('display', 'block')
+
+            svg2.selectAll(".annotation-note-content")
+                .append("foreignObject")
+                .attr("x", 0)
+                .attr("y", 5) 
+                .attr("width", 300) // replace with width you want 
+                .attr("height", 300)// replace with height you want
+                .append("xhtml:div")// replace with html element you want
+                .append("p")
+                .attr('class', 'annotation-note-label')
+                .style('color', "#E8336D")
+                .text(annotation.note.label)
+                .style('display', 'block');
+            // svg2.selectAll(".annotation-note-label")
+            //     .attr("width", 40)
+            //     .attr("y", 20)
+            //     .classed("visible", true)
             
 //             var path = d3.path();
 //             path.lineTo(225,0);
