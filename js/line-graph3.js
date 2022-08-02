@@ -20,7 +20,6 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         return d.Year >= parseTime("2000") && d.Year <= parseTime("2020")
     })
 
-    // 5. X scale will use the index of our data
     var xScale = d3.scaleTime().range([0, width]);
     var yScale = d3.scaleLinear().range([height, 0])
     xScale.domain(d3.extent(data, function (d) { return d.Year; }));
@@ -32,28 +31,24 @@ d3.json("/data/average_acoust_by_year.json").then(function (data) {
         .y(function (d) { return yScale(d.Acousticness); }) // set the y values for the line generator 
         .curve(d3.curveMonotoneX) // apply smoothing to the line
 
-    // 3. Call the x axis in a group tag
     svg3.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
 
-    // 4. Call the y axis in a group tag
     svg3.append("g")
         .attr("class", "y axis")
-        .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+        .call(d3.axisLeft(yScale)); 
 
-    // 9. Append the path, bind the data, and call the line generator 
     svg3.append("path")
-        .datum(data) // 10. Binds data to the line 
-        .attr("class", "line") // Assign a class for styling 
-        .attr("d", line); // 11. Calls the line generator 
+        .datum(data) 
+        .attr("class", "line") 
+        .attr("d", line); 
 
-    // 12. Appends a circle for each datapoint 
     svg3.selectAll(".dot")
         .data(data)
-        .enter().append("circle") // Uses the enter().append() method
-        .attr("class", "dot") // Assign a class for styling
+        .enter().append("circle") 
+        .attr("class", "dot") 
         .attr("cx", function (d, i) { return xScale(d.Year); })
         .attr("cy", function (d) { return yScale(d.Acousticness); })
         .attr("r", 5)
